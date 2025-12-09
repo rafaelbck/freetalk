@@ -1,0 +1,6 @@
+# Dependências do Node.js
+node_modules
+# Arquivos de ambiente sensíveis
+.env
+# Arquivos de build e compilados
+dist

@@ -13,6 +13,7 @@ import {
   deleteCommentRouter,
 } from "./routers";
 import cors from 'cors';
+import cookieSession from "cookie-session";
 
 const app = express();
 
@@ -21,8 +22,14 @@ app.use(cors({
   optionsSuccessStatus: 200
 }))
 
-app.use(express.urlencoded({ extended: true }));
+app.set('trust proxy', true);
+
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieSession({
+  signed: false,
+  secure: false
+}))
 
 app.use(newPostRouter);
 app.use(deletePostsRouter);
@@ -57,6 +64,8 @@ app.use(
 
 const start = async () => {
   if (!process.env.MONGO_URI) throw new Error("MONGO_URI is required");
+
+  if (!process.env.JWT_KEY) throw new Error("JWT_KEY is required");
 
   try {
     await mongoose.connect(process.env.MONGO_URI);

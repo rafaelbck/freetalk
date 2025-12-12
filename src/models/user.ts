@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { authenticationService } from "../../common";
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -17,7 +18,11 @@ const userSchema = new mongoose.Schema({
     ]
 });
 
-userSchema.pre('save', async function(done) {
+userSchema.pre('save', async function() {
+    if(this.isModified('password') || this.isNew){
+        const hashedPwd = await authenticationService.pwdToHash(this.get('password') as string);
+        this.set('password, hashed')
+    }
     
 })
 

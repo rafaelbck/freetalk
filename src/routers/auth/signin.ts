@@ -18,7 +18,11 @@ router.post(
 
     if (!isEqual) return next(new Error("wrong credentials"));
 
-    const token = jwt.sign({ email, userId: user._id }, process.env.JWT_KEY!);
+    const token = jwt.sign({ email, userId: user._id }, process.env.JWT_KEY!, {expiresIn: 300});
+
+    req.session = { jwt: token }
+
+    res.status(200).send(user)
   }
 );
 

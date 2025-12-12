@@ -19,7 +19,7 @@ router.post('/signup', async (req: Request, res: Response, next: NextFunction) =
     await newUser.save();
 
     req.session = { 
-        jwt: jwt.sign({ email, userId: newUser._id }, process.env.JWT_KEY!)
+        jwt: jwt.sign({ email, userId: newUser._id }, process.env.JWT_KEY!, {expiresIn: 300})
      }
 
     res.status(200).send(newUser)

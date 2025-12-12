@@ -29,7 +29,7 @@
     // MUDANÇA CRUCIAL: Desativar para permitir que 'import/export' sejam traduzidos para CJS
     "verbatimModuleSyntax": false, 
     
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,

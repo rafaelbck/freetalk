@@ -11,9 +11,11 @@ import {
   showPostsRouter,
   newCommentRouter,
   deleteCommentRouter,
+  
 } from "./routers";
 import cors from 'cors';
 import cookieSession from "cookie-session";
+import { currentUser, requireAuth } from "../common";
 
 const app = express();
 
@@ -31,13 +33,15 @@ app.use(cookieSession({
   secure: false
 }))
 
-app.use(newPostRouter);
-app.use(deletePostsRouter);
-app.use(updatePostRouter);
+app.use(currentUser)
+
+app.use(requireAuth, newPostRouter);
+app.use(requireAuth, deletePostsRouter);
+app.use(requireAuth, updatePostRouter);
 app.use(showPostsRouter);
 
-app.use(deleteCommentRouter);
-app.use(newCommentRouter);
+app.use(requireAuth, deleteCommentRouter);
+app.use(requireAuth, newCommentRouter);
 
 app.use((req, res, next) => {
   const error = new Error('not found') as customError;

@@ -21,8 +21,7 @@ The main focus of the development was to ensure mastery and correct implementati
 
 ## 2. Tech Stack
 
-Category | Technology | Project Usage |
-
+| Category | Technology | Project Usage |
 | --- | --- | --- |
 | **Framework** | **NodeJS + Expressjs** | Runtime and backend environment |
 | **Language** | **Typescript** | Used to ensure strict typing |

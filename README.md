@@ -1,6 +1,6 @@
 # FREETALK APP
 
-## 1. General info and Contexto
+## 1. General info and Context
 
 ### General
 FREETALK is a modular project built on RESTful APIs, designed to manage the creation and interaction of posts and comments.
@@ -24,17 +24,11 @@ The main focus of the development was to ensure mastery and correct implementati
 Category | Technology | Project Usage |
 
 | --- | --- | --- |
-
 | **Framework** | **NodeJS + Expressjs** | Runtime and backend environment |
-
 | **Language** | **Typescript** | Used to ensure strict typing |
-
 | **Database** | **MongoDB + Mongoose** | NoSQL database + Mongoose for schema definition |
-
 | **Security** | `scrypt` | Slow and robust hashing and salting function for password storage |
-
 | **Session Control** | `cookie-session` | Session management through cookies |
-
 | **Authorization** | **JWT** | User authentication and authorization method |
 
 ## 3. Security and Authentication

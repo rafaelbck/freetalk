@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import Comment from "../../models/comment";
 import Post from "../../models/post";
+import { BadRequestError } from "../../../common";
 
 const router = Router();
 
@@ -11,9 +12,7 @@ router.delete(
 
 
     if (!commentId || !postId) {
-      const error = new Error("post id and comment id are required") as customError;
-      error.status = 400;
-      next(error);
+      return (new BadRequestError("post id and comment id are required"))
     }
 
     try {

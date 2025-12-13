@@ -21,7 +21,7 @@ import {
 } from "./routers";
 import cors from 'cors';
 import cookieSession from "cookie-session";
-import { currentUser, requireAuth } from "../common";
+import { currentUser, requireAuth, errorHandler, NotFoundError } from "../common";
 
 const app = express();
 
@@ -56,27 +56,11 @@ app.use(requireAuth, deleteCommentRouter);
 app.use(requireAuth, newCommentRouter);
 
 app.use((req, res, next) => {
-  const error = new Error('not found') as customError;
-  error.status = 404;
-  next(error)
+  next(new NotFoundError())
 })
 
-declare global {
-  interface customError extends Error {
-    status?: number;
-  }
-}
-
 // error handler middleware (defined by error param)
-app.use(
-  (error: customError, req: Request, res: Response, next: NextFunction) => {
-    if (error.status) {
-      return res.status(error.status).json({ message: error.message });
-    }
-
-    res.status(500).json({ message: "Somenthing went wrong" });
-  }
-);
+app.use(errorHandler);
 
 const start = async () => {
   if (!process.env.MONGO_URI) throw new Error("MONGO_URI is required");

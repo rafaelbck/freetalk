@@ -9,8 +9,14 @@ import {
   deletePostsRouter,
   updatePostRouter,
   showPostsRouter,
+
   newCommentRouter,
   deleteCommentRouter,
+
+  currentUserRouter,
+  signinRouter,
+  signoutRouter,
+  signupRouter
   
 } from "./routers";
 import cors from 'cors';
@@ -34,6 +40,12 @@ app.use(cookieSession({
 }))
 
 app.use(currentUser)
+
+app.use(signupRouter)
+app.use(signinRouter)
+app.use(currentUserRouter)
+app.use(signoutRouter)
+
 
 app.use(requireAuth, newPostRouter);
 app.use(requireAuth, deletePostsRouter);

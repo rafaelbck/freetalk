@@ -21,12 +21,15 @@ router.delete(
         next(new Error('comment cannot be deleted!'))
     }
 
-    await Post.findOneAndUpdate(
+    const post = await Post.findOneAndUpdate(
         { _id: postId },
-        { $pull: { comments: commentId } }
+        { $pull: { comments: commentId } },
+        { new: true }
     )
 
-    res.status(200).json({ success: true })
+    if(!post) next(new Error())
+
+    res.status(200).send(post)
   }
 );
 

@@ -12,10 +12,10 @@ router.post('/signup', async (req: Request, res: Response, next: NextFunction) =
 
     if(user) return next(new BadRequestError('user with same email already exists'))
 
-    const newUser = new User({
+    const newUser = User.build({
         email,
         password
-    });
+    })
 
     await newUser.save();
 

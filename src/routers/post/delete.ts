@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import Post from "../../models/post";
 import { BadRequestError } from "../../../common";
+import { User, UserDoc } from "../../models/user";
 
 const router = Router();
 
@@ -10,16 +11,24 @@ router.delete(
     const { id } = req.params;
 
     if (!id) {
-      return next (new BadRequestError("post id is required"));
+      return next(new BadRequestError("post id is required"));
     }
 
     try {
       await Post.findOneAndDelete({ _id: id });
     } catch (err) {
-        next(new Error('post cannot be updated!'))
+      next(new Error("post cannot be updated!"));
     }
 
-    res.status(200).json({ success: true })
+    const user = await User.findOneAndUpdate(
+      { _id: req.currentUser!.userId },
+      { $pull: { posts: id } },
+      { new: true }
+    );
+
+    if(!user) return next(new Error());
+
+    res.status(200).send(user);
   }
 );
 

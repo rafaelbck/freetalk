@@ -13,15 +13,15 @@ router.post('/api/comment/new/:postId', async (req: Request, res: Response, next
        return next(new BadRequestError('content is required!'))
     }
 
-    const newComment = new Comment({
-        username: username ? username : "anonymous",
+    const newComment = Comment.build({
+        userName: username ? username : "anonymous",
         content
     })
 
     await newComment.save();
 
     const updatedPost = await Post.findOneAndUpdate(
-        { _id: postId },
+        { id: postId },
         { $push: { comments: newComment } },
         { new: true }
     )
